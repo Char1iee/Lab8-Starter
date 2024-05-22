@@ -6,4 +6,4 @@ Graceful degradation means that when certain features are not supported by the e
 ![pwa1](/pwa1.png)
 ![pwa2](/pwa2.png)
 
-!(https://char1iee.github.io/Lab8-Starter/)
+[https://char1iee.github.io/Lab8-Starter/](https://char1iee.github.io/Lab8-Starter/)
