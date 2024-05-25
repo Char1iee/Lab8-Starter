@@ -47,25 +47,26 @@ function initializeServiceWorker() {
   // B1. TODO - Check if 'serviceWorker' is supported in the current browser
   if ('serviceWorker' in navigator) {
   // B2. TODO - Listen for the 'load' event on the window object.
-    console.log("reached");
+    // console.log("reached");
     window.addEventListener('load', () => {
   // Steps B3-B6 will be *inside* the event listener's function created in B2
   // B3. TODO - Register './sw.js' as a service worker (The MDN article
   //            "Using Service Workers" will help you here)
-      try {
-        const registration = navigator.serviceWorker.register('/sw.js');
   // B4. TODO - Once the service worker has been successfully registered, console
   //            log that it was successful.
-        if(registration) {
-          console.log('Registration Successful');
-        }
   // B5. TODO - In the event that the service worker registration fails, console
   //            log that it has failed.
   // STEPS B6 ONWARDS WILL BE IN /sw.js
-      } catch(error) {
-        console.log('Registration Failed');
-      }   
+      navigator.serviceWorker.register('./sw.js')
+        .then((registratrion) => {
+          console.log('Registration Successful')
+        })
+        .catch((error) => {
+          console.log('Registration Failed');
+        })
     });
+  } else {
+    console.log('Service Workers Not Supported');
   }
 }
 
@@ -120,9 +121,8 @@ async function getRecipes() {
   // A11. TODO - Pass any errors to the Promise's reject() function
   return new Promise(async (resolve, reject) => {
     try {
-      for(let i = 0; i < RECIPE_URLS.length; i++) {
+      for(const url of RECIPE_URLS) {
         try {
-          const url = RECIPE_URLS[i];
           const fetched_url = await fetch(url);
           const data = await fetched_url.json();
           recipes.push(data);
@@ -133,6 +133,7 @@ async function getRecipes() {
       saveRecipesToStorage(recipes);
       resolve(recipes);
     } catch(error) {
+      console.log(error);
       reject(error);
     }
   })
